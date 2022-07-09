@@ -35,13 +35,15 @@ const MenuView = ({ cafe, bean }: IProps) => {
   const [cafeSelect, setCafe] = useState<any>({});
   const [beanSelect, setBean] = useState<any>({});
   const [isLoading, setLoading] = useState(false);
-  const handlePay = () => {
+
+  const handlePay = (userName: string) => {
     console.log('paying');
-    if(isLoading){
+    if (isLoading) {
       return;
     }
     setLoading(true);
     doBuy({
+      customerName: userName,
       cafeID: cafeSelect._id,
       beanID: beanSelect?._id
     }).then(res => {
