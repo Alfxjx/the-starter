@@ -20,7 +20,7 @@ export function Cart({ cafe, bean, onPay }: { cafe: string, bean: string, onPay:
         </div>
         <div className="w-36 h-full flex justify-center items-center">
           <button
-            disabled={!cafe && !customerName}
+            disabled={!(customerName !== '' && !!cafe)}
             className="py-2 px-8 bg-indigo-600 disabled:bg-indigo-300 text-white rounded disabled:cursor-not-allowed cursor-pointer"
             onClick={() => {
               onPay(customerName)
