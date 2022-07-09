@@ -1,9 +1,11 @@
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+
 import { Header } from "../components/Headers";
 import { MenuCardLeft, MenuCardRight, MenuCardLeftBean } from "../components/MenuCard";
 import { Cart } from "../components/Cart";
-import { getBean, getMenu } from "../requests";
+import { doBuy, getBean, getMenu } from "../requests";
 
 interface IProps {
   cafe: any[];
@@ -32,8 +34,28 @@ const Home: NextPage = () => {
 const MenuView = ({ cafe, bean }: IProps) => {
   const [cafeSelect, setCafe] = useState<any>({});
   const [beanSelect, setBean] = useState<any>({});
+  const [isLoading, setLoading] = useState(false);
   const handlePay = () => {
     console.log('paying');
+    if(isLoading){
+      return;
+    }
+    setLoading(true);
+    doBuy({
+      cafeID: cafeSelect._id,
+      beanID: beanSelect?._id
+    }).then(res => {
+      setLoading(false);
+      if (res.status === 200) {
+        toast('已下单！');
+      } else {
+        toast('下单失败！');
+      }
+    }).catch(() => {
+      setLoading(false);
+      toast('下单失败！');
+
+    })
   }
 
   const handleCafe = (id: string) => {

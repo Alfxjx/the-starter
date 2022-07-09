@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import Axios from 'axios';
 
-Axios.defaults.baseURL = 'http://localhost:3000';
+Axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? 'https://home.abandon.work' : 'http://localhost:3000';
 
 export default async function handler(
   req: NextApiRequest,

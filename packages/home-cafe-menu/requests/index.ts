@@ -9,5 +9,5 @@ export function getBean() {
 }
 
 export function doBuy(data: any) {
-  return Http.post('/buy', data);
+  return Http.post('/payment', data);
 }
