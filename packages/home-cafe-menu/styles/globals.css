@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+	font-family: "cola";
+	font-weight: 500;
+	src: url("../public/cola.ttf");
+}
