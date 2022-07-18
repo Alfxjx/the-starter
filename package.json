@@ -6,7 +6,8 @@
   ],
   "scripts": {
     "boot": "lerna bootstrap",
-    "server": "lerna run --scope home-admin-server start --stream"
+    "server:dev": "lerna run --scope home-admin-server start:dev --stream",
+    "cafe:dev": "lerna run --scope home-cafe-menu dev --stream"
   },
   "devDependencies": {
     "lerna": "^5.1.8"
