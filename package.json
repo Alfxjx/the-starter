@@ -5,7 +5,8 @@
     "packages/*"
   ],
   "scripts": {
-    "boot": "lerna bootstrap"
+    "boot": "lerna bootstrap",
+    "server": "lerna run --scope home-admin-server start --stream"
   },
   "devDependencies": {
     "lerna": "^5.1.8"
