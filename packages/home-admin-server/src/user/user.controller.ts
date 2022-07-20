@@ -35,7 +35,7 @@ export class UserController {
   @Patch('update')
   async updateUserInfo(
     @Request() req,
-    @Body() requestData: Partial<createUserDto>
+    @Body() requestData: Partial<createUserDto>,
   ) {
     this.logger.log(requestData);
     const user = await this.userService.findUserById(req.user._id);

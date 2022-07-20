@@ -5,7 +5,6 @@ export type PaymentDocument = Payment & Document;
 
 @Schema()
 export class Payment extends Document {
-
   @Prop()
   createdAt: Date;
 
@@ -14,7 +13,6 @@ export class Payment extends Document {
 
   @Prop()
   cafeID: string;
-
 
   @Prop()
   cafeName: string;
@@ -27,7 +25,6 @@ export class Payment extends Document {
 
   @Prop()
   income: number;
-
 }
 
 export const PaymentSchema = SchemaFactory.createForClass(Payment);

@@ -5,8 +5,7 @@ import { BeanDTO } from './dto/bean.dto';
 
 @Controller('bean')
 export class BeanController {
-  constructor(private readonly bean$: BeanService) { }
-
+  constructor(private readonly bean$: BeanService) {}
 
   @Get('')
   async findList() {
@@ -20,10 +19,9 @@ export class BeanController {
     return res;
   }
 
-
   @UseGuards(JwtAuthGuard)
   @Post('update')
-  async updateCafe(@Body() DTO: { id: string, dto: BeanDTO }) {
+  async updateCafe(@Body() DTO: { id: string; dto: BeanDTO }) {
     const res = await this.bean$.updateOne(DTO.id, DTO.dto);
     return res;
   }

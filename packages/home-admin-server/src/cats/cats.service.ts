@@ -8,7 +8,7 @@ import { MyLogger } from '../shared/logger/logger.service.';
 @Injectable()
 export class CatsService {
   constructor(
-    @InjectModel(Cat.name) private readonly catModel: Model<CatDocument>
+    @InjectModel(Cat.name) private readonly catModel: Model<CatDocument>,
   ) {}
 
   private logger = new MyLogger(CatsService.name);

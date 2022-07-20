@@ -5,10 +5,7 @@ import { PaymentService } from './payment.service';
 
 @Controller('payment')
 export class PaymentController {
-  constructor(
-    private readonly pay$: PaymentService,
-
-  ) { }
+  constructor(private readonly pay$: PaymentService) {}
 
   @Get()
   async findAll() {
@@ -21,5 +18,4 @@ export class PaymentController {
     const res = await this.pay$.addNewOne(DTO);
     return res;
   }
-
 }

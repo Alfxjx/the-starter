@@ -4,4 +4,3 @@ export class CafeDTO {
   readonly price: number;
   readonly isHot: boolean;
 }
-

@@ -13,7 +13,6 @@ export class Bean extends Document {
 
   @Prop()
   price: number;
-
 }
 
 export const BeanSchema = SchemaFactory.createForClass(Bean);

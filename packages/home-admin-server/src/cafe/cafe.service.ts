@@ -9,7 +9,7 @@ export class CafeService {
   constructor(
     @InjectModel(Cafe.name)
     private readonly cafeModel: Model<CafeDocument>,
-  ) { }
+  ) {}
 
   private logger = new Logger(CafeService.name);
 
@@ -29,7 +29,7 @@ export class CafeService {
   }
 
   async updateOne(id: string, DTO: CafeDTO): Promise<Cafe> {
-    const update = await this.cafeModel.findByIdAndUpdate(id, DTO);
+    const _update = await this.cafeModel.findByIdAndUpdate(id, DTO);
     const res = await this.findOneByID(id);
     return res;
   }

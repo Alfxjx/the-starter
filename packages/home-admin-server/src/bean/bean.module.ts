@@ -5,11 +5,11 @@ import { BeanService } from './bean.service';
 import { Bean, BeanSchema } from './schemas/bean.schema';
 
 @Module({
-  imports: [MongooseModule.forFeature([
-    { name: Bean.name, schema: BeanSchema }
-  ])],
+  imports: [
+    MongooseModule.forFeature([{ name: Bean.name, schema: BeanSchema }]),
+  ],
   controllers: [BeanController],
   providers: [BeanService],
-  exports: [BeanService]
+  exports: [BeanService],
 })
-export class BeanModule { }
+export class BeanModule {}

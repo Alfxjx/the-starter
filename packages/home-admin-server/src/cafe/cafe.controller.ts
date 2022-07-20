@@ -5,9 +5,7 @@ import { CafeDTO } from './dto/cafe.dto';
 
 @Controller('cafe')
 export class CafeController {
-  constructor(private readonly cafe$: CafeService) {
-
-  }
+  constructor(private readonly cafe$: CafeService) {}
 
   @Get('')
   async findList() {
@@ -21,10 +19,9 @@ export class CafeController {
     return res;
   }
 
-
   @UseGuards(JwtAuthGuard)
   @Post('update')
-  async updateCafe(@Body() DTO: { id: string, dto: CafeDTO }) {
+  async updateCafe(@Body() DTO: { id: string; dto: CafeDTO }) {
     const res = await this.cafe$.updateOne(DTO.id, DTO.dto);
     return res;
   }

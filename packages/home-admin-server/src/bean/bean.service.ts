@@ -9,7 +9,7 @@ export class BeanService {
   constructor(
     @InjectModel(Bean.name)
     private readonly beanModel: Model<BeanDocument>,
-  ) { }
+  ) {}
 
   private logger = new Logger(BeanService.name);
 
@@ -29,7 +29,7 @@ export class BeanService {
   }
 
   async updateOne(id: string, DTO: BeanDTO): Promise<Bean> {
-    const update = await this.beanModel.findByIdAndUpdate(id, DTO);
+    const _update = await this.beanModel.findByIdAndUpdate(id, DTO);
     const res = await this.findOneByID(id);
     return res;
   }

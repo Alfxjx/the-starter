@@ -9,26 +9,24 @@ import { Payment, PaymentSchema } from './schemas/payment.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([
-      { name: Payment.name, schema: PaymentSchema }
-    ]),
+    MongooseModule.forFeature([{ name: Payment.name, schema: PaymentSchema }]),
     MailerModule.forRoot({
       transport: {
         host: 'hwsmtp.exmail.qq.com',
         port: 465,
         auth: {
           user: process.env.MAIL_NAME,
-          pass: process.env.MAIL_PASS
-        }
+          pass: process.env.MAIL_PASS,
+        },
       },
       defaults: {
         from: '"nest-modules" <modules@nestjs.com>',
       },
     }),
     CafeModule,
-    BeanModule
+    BeanModule,
   ],
   controllers: [PaymentController],
   providers: [PaymentService],
 })
-export class PaymentModule { }
+export class PaymentModule {}

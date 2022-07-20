@@ -10,7 +10,7 @@ import { MyLogger } from '../shared/logger/logger.service.';
 @Injectable()
 export class UserService {
   constructor(
-    @InjectModel(User.name) private readonly userModel: Model<UserDocument>
+    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
   ) {}
 
   private readonly logger = new MyLogger(UserService.name);

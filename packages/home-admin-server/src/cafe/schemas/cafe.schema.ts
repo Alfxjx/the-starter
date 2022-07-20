@@ -16,7 +16,6 @@ export class Cafe extends Document {
 
   @Prop()
   price: number;
-
 }
 
 export const CafeSchema = SchemaFactory.createForClass(Cafe);

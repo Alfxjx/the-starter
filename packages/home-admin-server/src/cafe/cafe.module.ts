@@ -5,11 +5,11 @@ import { CafeService } from './cafe.service';
 import { Cafe, CafeSchema } from './schemas/cafe.schema';
 
 @Module({
-  imports: [MongooseModule.forFeature([
-    { name: Cafe.name, schema: CafeSchema },
-  ])],
+  imports: [
+    MongooseModule.forFeature([{ name: Cafe.name, schema: CafeSchema }]),
+  ],
   controllers: [CafeController],
   providers: [CafeService],
-  exports: [CafeService]
+  exports: [CafeService],
 })
-export class CafeModule { }
+export class CafeModule {}
