@@ -46,7 +46,7 @@ export class AuthController {
   async signup(@Body() req: AuthSignUpDTO) {
     const res = await this.authService.signup(req);
     if (!res) {
-      throw new HttpException('already has user', HttpStatus.FORBIDDEN);
+      throw new HttpException('already has user', HttpStatus.BAD_REQUEST);
     }
     return res;
   }

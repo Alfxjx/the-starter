@@ -39,14 +39,14 @@ export class UserController {
     this.logger.log(requestData);
     const user = await this.userService.findUserById(req.user._id);
     if (!user) {
-      throw new HttpException('error happens', HttpStatus.FORBIDDEN);
+      throw new HttpException('error happens', HttpStatus.NOT_FOUND);
     }
     const res = await this.userService.updateUser({
       _id: user._id,
       ...requestData,
     });
     if (!res) {
-      throw new HttpException('error happens', HttpStatus.FORBIDDEN);
+      throw new HttpException('error happens', HttpStatus.BAD_REQUEST);
     }
     return res;
   }
@@ -56,7 +56,7 @@ export class UserController {
     this.logger.log(requestData);
     const res = await this.userService.createUser(requestData);
     if (!res) {
-      throw new HttpException('error happens', HttpStatus.FORBIDDEN);
+      throw new HttpException('error happens', HttpStatus.BAD_REQUEST);
     }
     return res;
   }

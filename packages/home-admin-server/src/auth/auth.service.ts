@@ -42,7 +42,7 @@ export class AuthService {
   async signup(user: AuthSignUpDTO) {
     const hasUser = await this.userService.hasUser(user.email);
     if (hasUser) {
-      throw new HttpException('this user Exists', HttpStatus.FORBIDDEN);
+      throw new HttpException('this user Exists', HttpStatus.NOT_FOUND);
     } else {
       return this.userService.createUser({
         avatarUrl: '',
