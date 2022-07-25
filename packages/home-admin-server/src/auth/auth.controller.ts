@@ -9,9 +9,11 @@ import {
 } from '@nestjs/common';
 import { AuthService } from '../auth/auth.service';
 import { MyLogger } from '../shared/logger/logger.service.';
-import { signinDto } from '../user/dto/signin.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
+import { AuthSignInDTO } from './dto/signin.dto';
+import { AuthSignUpDTO } from './dto/signup.dto';
+import { HttpStatus } from '@nestjs/common';
 
 @Controller('auth')
 export class AuthController {
@@ -27,7 +29,7 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  async login(@Body() reqSignin: signinDto, @Request() req) {
+  async login(@Body() reqSignin: AuthSignInDTO, @Request() req) {
     const _id = req.user._doc._id;
     const res = await this.authService.login(_id, reqSignin);
     return res;
@@ -35,18 +37,16 @@ export class AuthController {
 
   @Post('logout')
   async logout() {
+    // TODO
     const res = await this.authService.logout();
     return res;
   }
 
   @Post('signup')
-  async signup(@Body() req) {
-    const res = await this.authService.signup({
-      avatarUrl: '',
-      ...req,
-    });
+  async signup(@Body() req: AuthSignUpDTO) {
+    const res = await this.authService.signup(req);
     if (!res) {
-      throw new HttpException('already has user', 400);
+      throw new HttpException('already has user', HttpStatus.FORBIDDEN);
     }
     return res;
   }

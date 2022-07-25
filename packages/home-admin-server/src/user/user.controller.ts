@@ -11,9 +11,11 @@ import {
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { MyLogger } from '../shared/logger/logger.service.';
-import { createUserDto } from './dto/create-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './schemas/user.schema';
 import { UserService } from './user.service';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { HttpStatus } from '@nestjs/common';
 
 @UseGuards(JwtAuthGuard)
 @Controller('user')
@@ -33,31 +35,28 @@ export class UserController {
   }
 
   @Patch('update')
-  async updateUserInfo(
-    @Request() req,
-    @Body() requestData: Partial<createUserDto>,
-  ) {
+  async updateUserInfo(@Request() req, @Body() requestData: UpdateUserDto) {
     this.logger.log(requestData);
     const user = await this.userService.findUserById(req.user._id);
     if (!user) {
-      throw new HttpException('error happens', 400);
+      throw new HttpException('error happens', HttpStatus.FORBIDDEN);
     }
     const res = await this.userService.updateUser({
       _id: user._id,
       ...requestData,
     });
     if (!res) {
-      throw new HttpException('error happens', 400);
+      throw new HttpException('error happens', HttpStatus.FORBIDDEN);
     }
     return res;
   }
 
   @Post('create')
-  async create(@Body() requestData: createUserDto) {
+  async create(@Body() requestData: CreateUserDto) {
     this.logger.log(requestData);
     const res = await this.userService.createUser(requestData);
     if (!res) {
-      throw new HttpException('error happens', 400);
+      throw new HttpException('error happens', HttpStatus.FORBIDDEN);
     }
     return res;
   }

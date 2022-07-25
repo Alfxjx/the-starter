@@ -1,11 +1,10 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { User, UserDocument } from './schemas/user.schema';
-import { createUserDto } from './dto/create-user.dto';
-import { updateUserDto } from './dto/update-user.dto';
-import { signinDto } from './dto/signin.dto';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { MyLogger } from '../shared/logger/logger.service.';
 @Injectable()
 export class UserService {
@@ -18,6 +17,19 @@ export class UserService {
   async getList() {
     const list = await this.userModel.find();
     return list;
+  }
+
+  /**
+   * @description
+   * @author xujx
+   * @date 2022-04-27
+   * @param {string} email
+   * @returns {*}
+   * @memberof UserService
+   */
+  async findUserByEmail(email: string) {
+    const user = await this.userModel.findOne({ email });
+    return user;
   }
 
   /**
@@ -42,12 +54,12 @@ export class UserService {
    * @description
    * @author xujx
    * @date 2022-04-27
-   * @param {string} username
+   * @param {string} email
    * @returns {*}
    * @memberof UserService
    */
-  async hasUser(username: string) {
-    const hasUser = await this.findUserByName(username);
+  async hasUser(email: string) {
+    const hasUser = await this.findUserByEmail(email);
     return !(hasUser === null);
   }
 
@@ -55,12 +67,12 @@ export class UserService {
    * @description
    * @author xujx
    * @date 2022-04-27
-   * @param {createUserDto} user
+   * @param {CreateUserDto} user
    * @returns {*}
    * @memberof UserService
    */
-  async createUser(user: createUserDto) {
-    const resp = await this.hasUser(user.username);
+  async createUser(user: CreateUserDto) {
+    const resp = await this.hasUser(user.email);
     if (resp) {
       this.logger.warn(`already has user ${user.username}`);
       return;
@@ -75,30 +87,19 @@ export class UserService {
    * @author xujx
    * @date 2022-04-27
    * @param {*} _id
-   * @param {updateUserDto} user
+   * @param {UpdateUserDto} user
    * @returns {*}
    * @memberof UserService
    */
-  async updateUser(user: updateUserDto) {
-    const resp = await this.hasUser(user.username);
+  async updateUser(user: UpdateUserDto) {
+    const resp = await this.hasUser(user.email);
     if (!resp) {
-      this.logger.warn(`no user called ${user.username}`);
+      this.logger.warn(`no user emailed as ${user.email}`);
       return;
     }
     const { _id, ...rest } = user;
     await this.userModel.findByIdAndUpdate(_id, rest);
     const user$ = await this.userModel.findById(_id);
     return user$;
-  }
-
-  async signin(req: signinDto) {
-    const hasUser = await this.findUserByName(req.username);
-    if (!hasUser) {
-      throw new HttpException('unkown user', 401);
-    }
-    if (req.password !== hasUser.password) {
-      throw new HttpException('password error', 401);
-    }
-    return hasUser;
   }
 }
