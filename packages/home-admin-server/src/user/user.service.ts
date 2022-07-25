@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 
 import { User, UserDocument } from './schemas/user.schema';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateUserDto, UpgradeDTO } from './dto/update-user.dto';
 import { MyLogger } from '../shared/logger/logger.service.';
 @Injectable()
 export class UserService {
@@ -101,5 +101,9 @@ export class UserService {
     await this.userModel.findByIdAndUpdate(_id, rest);
     const user$ = await this.userModel.findById(_id);
     return user$;
+  }
+
+  async roleMutator(user: UpgradeDTO) {
+    return user;
   }
 }

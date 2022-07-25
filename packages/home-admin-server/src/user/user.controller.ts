@@ -14,7 +14,7 @@ import { MyLogger } from '../shared/logger/logger.service.';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './schemas/user.schema';
 import { UserService } from './user.service';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateUserDto, UpgradeDTO } from './dto/update-user.dto';
 import { HttpStatus } from '@nestjs/common';
 
 @UseGuards(JwtAuthGuard)
@@ -58,6 +58,12 @@ export class UserController {
     if (!res) {
       throw new HttpException('error happens', HttpStatus.BAD_REQUEST);
     }
+    return res;
+  }
+
+  @Post('mutate-role')
+  async upgrade(@Body() req: UpgradeDTO) {
+    const res = await this.userService.roleMutator(req);
     return res;
   }
 }

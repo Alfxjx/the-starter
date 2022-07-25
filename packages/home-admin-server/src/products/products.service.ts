@@ -8,7 +8,7 @@ export class ProductsService {
   private logger = new MyLogger();
 
   create(createProductDto: CreateProductDto) {
-    this.logger.log(JSON.stringify(createProductDto));
+    this.logger.log(createProductDto);
     return 'This action adds a new product';
   }
 
@@ -21,7 +21,7 @@ export class ProductsService {
   }
 
   update(id: number, updateProductDto: UpdateProductDto) {
-    this.logger.log(JSON.stringify(updateProductDto));
+    this.logger.log(updateProductDto);
     return `This action updates a #${id} product`;
   }
 
