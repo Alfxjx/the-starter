@@ -10,7 +10,7 @@ import {
 import { AuthService } from '../auth/auth.service';
 import { MyLogger } from '../shared/logger/logger.service.';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { LocalAuthGuard } from './guards/local-auth.guard';
+// import { LocalAuthGuard } from './guards/local-auth.guard';
 import { AuthSignInDTO } from './dto/signin.dto';
 import { AuthSignUpDTO } from './dto/signup.dto';
 import { HttpStatus } from '@nestjs/common';
@@ -27,11 +27,10 @@ export class AuthController {
     return req.user;
   }
 
-  @UseGuards(LocalAuthGuard)
+  // @UseGuards(LocalAuthGuard)
   @Post('login')
-  async login(@Body() reqSignin: AuthSignInDTO, @Request() req) {
-    const _id = req.user._doc._id;
-    const res = await this.authService.login(_id, reqSignin);
+  async login(@Request() req, @Body() reqSignin: AuthSignInDTO) {
+    const res = await this.authService.login(reqSignin);
     return res;
   }
 

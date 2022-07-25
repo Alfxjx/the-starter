@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../user/user.service';
 import { AuthSignUpDTO } from './dto/signup.dto';
 import { AuthSignInDTO } from './dto/signin.dto';
+import { Role } from './roles/roles.enum';
 
 @Injectable()
 export class AuthService {
@@ -12,7 +13,7 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, pass: string): Promise<any> {
-    const user = await this.userService.findUserByName(email);
+    const user = await this.userService.findUserByEmail(email);
     if (user && user.password === pass) {
       const { password: _, ...result } = user;
       return result;
@@ -20,16 +21,16 @@ export class AuthService {
     return null;
   }
 
-  async login(_id: string, user: AuthSignInDTO) {
+  async login(user: AuthSignInDTO) {
     const userExist = await this.userService.hasUser(user.email);
     if (!userExist) {
       throw new HttpException('Not Found this user', HttpStatus.NOT_FOUND);
     }
-    const userFromDB = await this.userService.findUserById(_id);
+    const userFromDB = await this.userService.findUserByEmail(user.email);
     const payload = {
       username: userFromDB.username,
       email: userFromDB.email,
-      sub: _id,
+      sub: userFromDB._id,
     };
     return {
       access_token: this.jwtService.sign(payload),
@@ -47,6 +48,7 @@ export class AuthService {
       return this.userService.createUser({
         avatarUrl: '',
         ...user,
+        role: [Role.Customer],
       });
     }
   }
