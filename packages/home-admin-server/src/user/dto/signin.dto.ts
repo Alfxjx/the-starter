@@ -1,4 +1,4 @@
 export class signinDto {
-  readonly username: string;
+  readonly email: string;
   readonly password: string;
 }

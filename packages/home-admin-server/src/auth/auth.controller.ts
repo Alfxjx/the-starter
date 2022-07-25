@@ -33,6 +33,12 @@ export class AuthController {
     return res;
   }
 
+  @Post('logout')
+  async logout() {
+    const res = await this.authService.logout();
+    return res;
+  }
+
   @Post('signup')
   async signup(@Body() req) {
     const res = await this.authService.signup({
